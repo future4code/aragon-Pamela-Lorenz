@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ul {
+    margin: 1rem;
+    list-style-type: none;
+
+    display: grid;
+    grid-template-columns: 320px 480px ;
+    row-gap: 10px;
+    column-gap: 10px;
+}
+
+li {
+    border: 1px solid black;
+
+    height: 65px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* celulares */
+@media screen and (min-device-width: 320px) and (max-device-width: 480px) {
+
+    ul {
+        grid-template-columns: 1fr;
+    }
+}
