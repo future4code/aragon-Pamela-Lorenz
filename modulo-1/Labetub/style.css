@@ -4,20 +4,25 @@
     box-sizing: border-box;
 }
 
-ul {
+/* ul {
     margin: 1rem;
     list-style-type: none;
 
-    display: grid;
-    grid-template-columns: 320px 480px ;
+    display:grid;
+    grid-template-columns: 320px 480px;
     row-gap: 10px;
     column-gap: 10px;
+} */
+main {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
 }
 
 li {
     border: 1px solid black;
 
-    height: 65px;
+    height: 320px;
 
     display: flex;
     justify-content: center;
