@@ -1,8 +1,11 @@
 import React from "react";
 import axios from "axios";
+import PlaylistsPage from './components/PlaylistsPage/PlaylistsPage';
+import TracksPage from './components/TracksPage/TracksPage';
 
 export default class App extends React.Component {
   state = {
+
     playlists: [],
     inputName: ""
   };
@@ -25,7 +28,7 @@ export default class App extends React.Component {
       }
     )
       .then((response) => {
-        this.setState({ playlists: respons      e.data.result.list });
+        this.setState({ playlists: response.data.result.list });
       })
       .catch((error) => {
         console.log(error.message);
