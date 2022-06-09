@@ -38,7 +38,7 @@ export const requestCreatePost = (form, navigate, clear) => {
     axios.post(`${BASE_URL}/posts`, body, header)
         .then(response => {
             alert(response.data)
-            getPosts()
+            // getPosts()
             clear()
         })
         .catch(error => console.log(error.menssage))
