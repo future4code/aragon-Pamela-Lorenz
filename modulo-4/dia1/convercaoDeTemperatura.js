@@ -1,52 +1,6 @@
-const convertTemperatura = (temperaturaEmCelsius, unidadeDeConvercao) => {
-    let unidade = unidadeDeConvercao.toUpperCase()
-    let convercaoTemperatura = unidade === "K"
-        ? (temperaturaEmCelsius + 273.15)
-        : ((temperaturaEmCelsius * 9 / 5) + 32)
-    if (unidade === "K" && typeof temperaturaEmCelsius === "number") {
-        return `${temperaturaEmCelsius}° é equivalente a ${convercaoTemperatura}K`
-    }
-    else if (unidade === "F" && typeof temperaturaEmCelsius === "number") {
-        return `${temperaturaEmCelsius}° é equivalente a ${convercaoTemperatura}°F`
-    } else return `Erro! Parâmetro inválido. A função deve receber um número e uma string "K" ou "F" para conversão.`
-}
-
-console.log(convercaoTemperatura(20, "K"))
-console.log(convercaoTemperatura(20, "F"))
-console.log(convercaoTemperatura(200, "k"))
-console.log(convercaoTemperatura(20, "r"))
-console.log(convercaoTemperatura("dez", "F"))
-const convercaoTemperatura = (temperaturaEmCelsius, unidadeDeConvercao) => {
-    let unidade = unidadeDeConvercao.toUpperCase()
-    let convercaoTemperatura = unidade === "K"
-        ? (temperaturaEmCelsius + 273.15)
-        : ((temperaturaEmCelsius * 9 / 5) + 32)
-    if (unidade === "K" && typeof temperaturaEmCelsius === "number") {
-        return `${temperaturaEmCelsius}° é equivalente a ${convercaoTemperatura}K`
-    }
-    else if (unidade === "F" && typeof temperaturaEmCelsius === "number") {
-        return `${temperaturaEmCelsius}° é equivalente a ${convercaoTemperatura}°F`
-    } else return `Erro! Parâmetro inválido. A função deve receber um número e uma string "K" ou "F" para conversão.`
-}
-console.log(convercaoTemperatura(20, "K"))
-console.log(convercaoTemperatura(20, "F"))
-console.log(convercaoTemperatura(200, "k"))
-console.log(convercaoTemperatura(20, "r"))
-console.log(convercaoTemperatura("dez", "F"))
-
-
-// const converteCelsius = (temperaturaAtual, unidade) => {
-//     if (temperaturaAtual == unidade) {
-//         unidade(F = fahrenheit)
-//         const fahrenheit = (0 * 9 / 5) + 32;
-//         console.log("o valor de 0 graus em fahrenheit é ", fahrenheit)
-//     }
-//     else {
-//         const converteCelsius = (temperaturaAtual, unidade) => {
-//             unidade(K = kelvin)
-//             const kelvin = 0 + 273.15;
-//             console.log("o valor de 0 graus celsius é ", kelvin, " graus em kelvin")
-//         }
-//     }
-
-// tentei de todo o jeito mais persistia no erro por isso tem parte comentada. Um pouco peguei de colegas e outro tentei resolver mas não consegui se possível dar feedback agradeço.
+//Termômetro de converção
+let celsius = 20
+let f = (9 * celsius / 5) + 32
+let c = 5 * (f - 32) / 9
+let k = (f - 32) * 5 / 9 + 273
+console.log(`De celsius para fahrenheite ${f}.\n De fahrenheite para celsius ${c}.\n De fahrenheite para Kelvin ${k}.`)
