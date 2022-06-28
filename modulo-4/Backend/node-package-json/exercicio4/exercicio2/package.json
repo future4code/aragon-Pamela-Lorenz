@@ -1,0 +1,12 @@
+{
+  "name": "exercicio2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "exercicio2.js",
+  "scripts": {
+    "exercicio2": "node ./exercicio2.js"
+  },
+  "keywords": [],
+  "author": "Pâmela Maiara Castro Lorenz",
+  "license": "ISC"
+}
