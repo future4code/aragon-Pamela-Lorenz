@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc && node ./build/index.js",
-    "exercicio2": "tsc && node ./build/apiTest.js",
-    "start": "tsc && node ./build/index.js"
+    "exercicio2": "tsc && node ./build/apiTest.js"
   },
   "keywords": [],
   "author": "",
