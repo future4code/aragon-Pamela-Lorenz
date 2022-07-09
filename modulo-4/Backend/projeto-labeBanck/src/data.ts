@@ -1,22 +1,19 @@
-type Pagamento = {
-pagamento: number,
-descricao: string,
-valor: number,
-dataPagamento: string
-
+export type Pagamento = {
+    descricao: string,
+    valorPago: number,
+    dataPagamento: string
 }
 
-type Conta = {
-id: number,
-nome: string,
-cpf: string,
-dataDeNascimento: string,
-saldo: number,
-    extrato: Pagamento
-
+export type Conta = {
+    id: number,
+    nome: string,
+    cpf: string,
+    dataDeNascimento: string,
+    saldo: number,
+    extrato: Pagamento[]
 }
 
-let contas: Conta[] = [
+export let contas: Conta[] = [
     {
         id: 1,
         nome: "Alice",
