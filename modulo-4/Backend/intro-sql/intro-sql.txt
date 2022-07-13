@@ -1,0 +1,25 @@
+CREATE TABLE Users (id VARCHAR(255) PRIMARY KEY, name VARCHAR(255), email VARCHAR(255));
+
+INSERT INTO `Users` (id, name, email)
+VALUES ("001", "Luana", "lua@lbn.com");
+
+INSERT INTO `Users` (id, name, email)
+values ("002", "Vinicius", "vini@lbn.com");
+
+INSERT INTO `Users` (id, name, email)
+values ("003", "Laura", "lau@lbn.com";
+
+INSERT INTO `Users` (id, name, email)
+VALUES ("004", "Yuzo", "Yuzo@lbn.com");;
+
+DELETE FROM `Users` WHERE id = "004";
+
+OBS: Essa linha é referente a letra A da 3 e final da 4. SELECT * FROM `Users`;
+
+SELECT id AS identifier, name FROM `Users`;
+
+SELECT FROM `Users` WHERE id = "003";
+
+SELECT * FROM `Users` WHERE name LIKE "%a%";
+
+SELECT * FROM `Users` WHERE name NOT LIKE "%r%" AND email LIKE "%u%";
