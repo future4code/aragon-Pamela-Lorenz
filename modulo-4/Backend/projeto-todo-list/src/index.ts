@@ -3,6 +3,7 @@ import cors from "cors";
 import { ping } from "./endpoints/ping";
 import connection from "./database/connection";
 import { table_responsibles, table_tasks, table_users } from "./database/tables";
+import { STATUS_LIST } from "./types";
 
 const app = express();
 
@@ -125,6 +126,109 @@ app.post("/tasks/:taskId/users", async (req: Request, res: Response) => {
       res.status(500).end();
     } else {
       res.status(errorCode).send(err.message);
+    };
+  };
+});
+
+app.put("/users/:userId", async (req: Request, res: Response) => {
+  let errorCode = 400;
+  try {
+    const { userId } = req.params;
+    const { nickname } = req.body;
+    if (!nickname) {
+      errorCode = 422;
+      throw new Error("Missing data in order to update user.");
+    };
+    if (typeof nickname !== "string") {
+      errorCode = 422;
+      throw new Error("Invalid nickname");
+    };
+    if (nickname.length < 4) {
+      errorCode = 422;
+      throw new Error("New nickname should have at least 3 characters.");
+    };
+    const userById = await connection(table_users)
+      .select("*")
+      .where({ id: userId });
+    if (!userById[0]) {
+      errorCode = 409;
+      throw new Error("Id doesn´t match a valid user.");
+    };
+    await connection(table_users)
+      .update({ nickname })
+      .where({ id: userId });
+    res.status(200).send({
+      message: "Usuário atualizado com sucesso!"
+    });
+  } catch (error: any) {
+    if (error.statusCode === 200) {
+      res.status(500).end();
+    } else {
+      res.status(errorCode).send(error.message);
+    };
+  };
+});
+
+app.put("/tasks/:taskId", async (req: Request, res: Response) => {
+  let errorCode = 400;
+  try {
+    const { taskId } = req.params;
+    const { status } = req.body;
+    if (!status) {
+      errorCode = 422;
+      throw new Error("Missing data in order to update task.");
+    };
+    if (!(status in STATUS_LIST)) {
+      errorCode = 422;
+      throw new Error("Invalid status.");
+    };
+    const taskById = await connection(table_tasks)
+      .select("*")
+      .where({ id: taskId });
+    if (!taskById[0]) {
+      errorCode = 409;
+      throw new Error("Id doesn´t match a valid task.");
+    };
+    await connection(table_tasks)
+      .update({ status })
+      .where({ id: taskId });
+    res.status(200).send({
+      message: "Estatos atualizado com sucesso da tasks!"
+    });
+  } catch (error: any) {
+    if (error.statusCode === 200) {
+      res.status(500).end();
+    } else {
+      res.status(errorCode).send(error.message);
+    };
+  };
+});
+
+app.delete("/tasks/:taskId", async (req: Request, res: Response) => {
+  let errorCode = 400;
+  try {
+    const { taskId } = req.params;
+    const taskById = await connection(table_tasks)
+      .select("*")
+      .where({ id: taskId });
+    if (!taskById[0]) {
+      errorCode = 409;
+      throw new Error("Id doesn´t match a valid task.");
+    };
+    await connection(table_responsibles)
+      .delete()
+      .where({ taskId: taskId });
+    await connection(table_tasks)
+      .delete()
+      .where({ id: taskId });
+    res.status(200).send({
+      message: "Task removido com sucesso!"
+    });
+  } catch (error: any) {
+    if (error.statusCode === 200) {
+      res.status(500).end();
+    } else {
+      res.status(errorCode).send(error.message);
     };
   };
 });
