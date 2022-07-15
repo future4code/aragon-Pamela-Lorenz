@@ -1,11 +1,9 @@
 import connection from "./connection";
 import { responsibles, tasks, users } from "./data";
-
-const table_users = "Users";
-const table_tasks = "Tasks";
-const table_responsibles = "Responsibles";
+import { table_responsibles, table_tasks, table_users } from "./tables";
 
 const createTables = async () => {
+    // Conexão do KnexJs, que representa as queries de criação da tabelas.
     await connection.raw(`
             CREATE TABLE IF NOT EXISTS ${table_users}(
                 id VARCHAR(255) PRIMARY KEY,
@@ -26,7 +24,7 @@ const createTables = async () => {
 
             CREATE TABLE IF NOT EXISTS ${table_responsibles}(
                 userId VARCHAR(255) NOT NULL,
-                taskId VARCHAR(255) NOT NULL,
+                taskId VARCHAR(255) UNIQUE NOT NULL,
                 FOREIGN KEY (userId) REFERENCES ${table_users}(id),
                 FOREIGN KEY (taskId) REFERENCES ${table_tasks}(id)
             );
