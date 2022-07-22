@@ -1,0 +1,8 @@
+### Endpoint de teste
+GET http://localhost:3003/ping
+
+### Endpoint de buscar usuário
+GET http://localhost:3003/users
+
+### Endpoint de produtos
+GET http://localhost:3003/products
