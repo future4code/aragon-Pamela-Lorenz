@@ -1,0 +1,61 @@
+Exerc.1
+CRIATE TABLE `projetoLabenu`(
+id VARCHAR(255) PRIMARY KEY,
+name VARCHAR(255) UNIQUE,
+title VARCHAR(255),
+date date);
+
+Exerc.2
+Projeto 1 = {
+id: "001",
+  name: "LabeSky",
+  title: "LSy",
+date: "05/10/2023"};
+
+Projeto 2 = {
+id: "002",
+name: "Labefy",
+title: "LFy",
+date: "06/01/2024"};
+
+Projeto 3 = {
+id: "003",
+name: "AstroZoom",
+  title: "AZm",
+  date: "20/12/2022"};
+
+INSERT INTO `projetoLabenu`
+VALUES
+( "001", "LabeSky", "LSy", "2023/10/05"),
+("002", "Labefy", "LFy", "2024/01/06"),
+("003", "AstroZoom", "AZm", "2022/12/20");
+
+Exerc.3.a.b.c
+ALTER TABLE `projetoLabenu`
+DROP COLUMN role;
+ALTER TABELA `projetoLabenu`
+CHANGE date dueDate VARCHAR(255) UNIQUE NOT NULL;
+ALTER TABLE Users
+DESCRIBE `Users`;
+
+Exerc.4.a.b
+ALTER TABLE `projetoLabenu`
+ADD description VARCHAR(255)  NOT NULL;
+UPDATE `projetoLabenu`
+SET description = "Projeto de sistema em nuvem da Labenu"
+where = "001";
+UPDATE `projetoLabenu`
+SET description = "Projeto de sistema de gerenciamento de músicas da Labenu"
+where = "002";
+UPDATE `projetoLabenu`
+SET description "Projeto de rede de comunicação da Labenu"
+where = "003";
+
+Exerc.5.a.b
+SELECT *
+FROM `projetoLabenu`
+ORDER BY dueDate DESC; 
+SELECT nome, dueDate
+FROM `projetoLabenu`
+ORDER BY dueDate ASC
+LIMIT 2;
