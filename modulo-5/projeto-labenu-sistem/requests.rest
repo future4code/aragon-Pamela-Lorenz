@@ -4,6 +4,9 @@ GET http://localhost:3003/classrooms
 ### busca estudantes
 GET http://localhost:3003/students
 
+### busca estudante pelo nome
+GET http://localhost:3003/students/name
+
 ### criar turma
 POST http://localhost:3003/classrooms
     Content-Type: application/json
