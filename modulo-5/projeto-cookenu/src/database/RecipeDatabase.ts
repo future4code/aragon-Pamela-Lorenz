@@ -21,7 +21,9 @@ export class RecipeDatabase extends BaseDatabase {
             updated_at: recipe.getUpdatedAt(),
             creator_id: recipe.getCreatorId()
         }
-        await BaseDatabase.connection(RecipeDatabase.TABLE_RECIPES).insert(newRecipe)
+        await BaseDatabase
+            .connection(RecipeDatabase.TABLE_RECIPES)
+            .insert(newRecipe)
     }
 
     public editRecipe = async (recipe: Recipe) => {

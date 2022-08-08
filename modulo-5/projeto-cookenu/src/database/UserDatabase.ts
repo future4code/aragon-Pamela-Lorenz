@@ -37,4 +37,10 @@ export class UserDatabase extends BaseDatabase {
         await BaseDatabase.connection(RecipeDatabase.TABLE_RECIPES).delete().where({ creator_id: id })
         await BaseDatabase.connection(UserDatabase.TABLE_USERS).delete().where({ id })
     }
+
+    public getAllUsers = async () => {
+        const userDB: IUserDB[] = await BaseDatabase.connection(UserDatabase.TABLE_USERS)
+            .select()
+        return userDB
+    }
 }
