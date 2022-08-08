@@ -59,21 +59,19 @@ export class RecipeController {
                 errorCode = 401
                 throw new Error("Token inválido")
             }
-            // console.log(title)
-            // console.log(description)
-            //             if (!title || !description) {
-            //                 errorCode = 422
-            //                 throw new Error("parametro faltando")
-            //             }
-            // if (title !== "string" || description !== "string") {
-            //     errorCode = 415
-            //     throw new Error("tipo de dado incorreto")
-            // }
+            if (!title || !description) {
+                errorCode = 422
+                throw new Error("parametro faltando")
+            }
+            if (typeof title !== "string" || typeof description !== "string") {
+                errorCode = 415
+                throw new Error("tipo de dado incorreto")
+            }
             if (title.length < 3) {
                 errorCode = 422
                 throw new Error("Título deve possuir 3 ou mais caracteres.")
             }
-            if (!description) {
+            if (description.length < 10) {
                 errorCode = 422
                 throw new Error("A descrição deve possuir 10 ou mais caracteres.")
             }
