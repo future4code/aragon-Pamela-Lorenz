@@ -105,7 +105,7 @@ export class UserBusiness {
     }
 
     public getAllUsers = async (input: any) => {
-        const token = input.headers.authorization
+        const token = input.token
         const authenticator = new Authenticator()
         const payload = authenticator.getTokenPayload(token)
         if (!payload) {
@@ -120,14 +120,14 @@ export class UserBusiness {
     }
 
     public deletUser = async (input: any) => {
-        const token = input.headers.authorization
+        const token = input.token
         const authenticator = new Authenticator()
         const payload = authenticator.getTokenPayload(token)
         const userDatabase = new UserDatabase()
         const { id } = input
         const findById = await userDatabase.findById(id)
         if (!payload) {
-            throw new Error("Token faltando.")
+            throw new Error("Token faltando ou inválido.")
         }
         if (!findById) {
             throw new Error("Usuário não existe.")
