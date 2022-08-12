@@ -1,3 +1,4 @@
+import { PostDatabase } from "../database/PostDatabase"
 import { UserDatabase } from "../database/UserDatabase"
 import { ICreatePostInputDTO, IDeletePostInputDTO, IEditPostInputDTO, IGetPostOutputDTO, IGetPostsInputDTO, Post } from "../models/Post"
 import { USER_ROLES } from "../models/User"
@@ -10,7 +11,8 @@ export class PostBusiness {
         private userDatabase: UserDatabase,
         private idGenerator: IdGenerator,
         private hashManager: HashManager,
-        private authenticator: Authenticator
+        private authenticator: Authenticator,
+        private postDatabase: PostDatabase
     ) { }
 
     public getPosts = async (input: IGetPostsInputDTO) => {
@@ -34,9 +36,11 @@ export class PostBusiness {
             limit,
             offset
         )
-        const posts = postsDB.map((postDB: IGetPostOutputDTO) => {
-            return new posts(
-                postDB.posts
+        const posts = postsDB.map((postDB) => {
+            return new Post(
+                postDB.id,
+                postDB.content,
+                postDB.user_id
             )
         })
         const response = {
@@ -67,7 +71,7 @@ export class PostBusiness {
             content,
             payload.id
         )
-        await this.PostDatabase.createPost(post)
+        await this.postDatabase.createPost(post)
         const response = {
             message: "Post criado com sucesso",
             post
@@ -88,14 +92,14 @@ export class PostBusiness {
         if (content && content.length < 3) {
             throw new Error("Parâmetro content deve possuir pelo menos 3 caracteres")
         }
-        const postDB = await this.PostDatabase.findPostById(token)
+        const postDB = await this.postDatabase.findPostById(token)
         if (!postDB) {
             throw new Error("O post a ser editado, não existe")
         }
         const post = new Post(
-            postDB.IdGenerator,
-            postDB.updatePost,
-            postDB.conntent
+            postDB.id,
+            postDB.content,
+            postDB.user_id
         )
         if (payload.role === USER_ROLES.NORMAL) {
             if (payload.id !== post.getUserId()) {
@@ -118,7 +122,6 @@ export class PostBusiness {
         if (!payload) {
             throw new Error("Token faltando ou inválido")
         }
-
         const postDB = await this.postDatabase.findPostById(idToDelete)
         if (!postDB) {
             throw new Error("O post a ser deletado não existe")
@@ -126,8 +129,7 @@ export class PostBusiness {
         const post = new Post(
             postDB.id,
             postDB.content,
-            postDB.updated_at,
-        )
+            postDB.user_id)
         if (payload.role === USER_ROLES.NORMAL) {
             if (payload.id !== post.getUserId()) {
                 throw new Error("Esse post não pode ser deletado por esse usuário")
