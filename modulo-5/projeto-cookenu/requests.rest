@@ -1,0 +1,52 @@
+### Endpoint de test
+GET http://localhost:3003/ping
+
+### Signup
+POST http://localhost:3003/users/signup
+Content-Type: application/json
+
+{
+    "nickname": "pamelamaia",
+    "email": "pamelamaia@gmail.com",
+    "password": "dfg123"
+}
+
+### 2) Login
+POST http://localhost:3003/users/login
+Content-Type: application/json
+
+{
+    "email": "pamelamaia@gmail.com",
+    "password": "dfg123"
+}
+
+### 3) Create recipe
+POST http://localhost:3003/recipes
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ5NTYwOWM5LWY1NjUtNGU1ZS04ZDVkLTJkMGVmNGIwMTRiYiIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE2NTk5Njg3NzIsImV4cCI6MTY2MDA1NTE3Mn0.4UPRT_hIYDQe4yAZ1ugEi4f1-V2k5HrDLX_O-HQ-a1E
+Content-Type: application/json
+
+{
+    "title": "Ovo frito",
+    "description": "Fritar ovo em um fio de azeite na chapa"
+}
+
+### 4) Edit recipe
+PUT http://localhost:3003/recipes/101
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIwNWIzMjlhLTllYjQtNDY2NS04NTlmLTZhNTcyM2ZkY2ZmZCIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE2NTk5MTgyMzksImV4cCI6MTY2MDAwNDYzOX0.PbYmvwmhRy2w5tvj2EzKF8fupJwq6IYO8L5uHcZIgNE
+Content-Type: application/json
+
+{
+    "description": "Passar o bife em um fio de azeite com óleo bem quente na chapa e jogar cebola no final"
+}
+
+### 5) Delete recipe
+DELETE http://localhost:3003/recipes/101
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIwNWIzMjlhLTllYjQtNDY2NS04NTlmLTZhNTcyM2ZkY2ZmZCIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE2NTk5MTgyMzksImV4cCI6MTY2MDAwNDYzOX0.PbYmvwmhRy2w5tvj2EzKF8fupJwq6IYO8L5uHcZIgNE
+
+### 6) Get all recipes
+GET http://localhost:3003/recipes?sort=DESC
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIwNWIzMjlhLTllYjQtNDY2NS04NTlmLTZhNTcyM2ZkY2ZmZCIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE2NTk5MTgyMzksImV4cCI6MTY2MDAwNDYzOX0.PbYmvwmhRy2w5tvj2EzKF8fupJwq6IYO8L5uHcZIgNE
+
+### 7) Delete user
+DELETE http://localhost:3003/users/f03017bb-2c08-4cdc-bb63-7fbd7cebe01f
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIwNWIzMjlhLTllYjQtNDY2NS04NTlmLTZhNTcyM2ZkY2ZmZCIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE2NTk5MTgyMzksImV4cCI6MTY2MDAwNDYzOX0.PbYmvwmhRy2w5tvj2EzKF8fupJwq6IYO8L5uHcZIgNE
