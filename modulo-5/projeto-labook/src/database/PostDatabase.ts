@@ -19,7 +19,6 @@ export class PostDatabase extends BaseDatabase {
             .orderBy(`updated_at`, sort)
             .limit(limit)
             .offset(offset)
-
         return postsDB
     }
 
@@ -29,7 +28,6 @@ export class PostDatabase extends BaseDatabase {
             content: post.getContent(),
             user_id: post.getUserId(),
         }
-
         await BaseDatabase
             .connection(PostDatabase.TABLE_POSTS)
             .insert(postDB)
@@ -40,7 +38,6 @@ export class PostDatabase extends BaseDatabase {
             .connection(PostDatabase.TABLE_POSTS)
             .select()
             .where({ id })
-
         return postDB[0]
     }
 
@@ -56,7 +53,6 @@ export class PostDatabase extends BaseDatabase {
             .connection(PostDatabase.TABLE_POSTS)
             .select()
             .where({ creator_id: userId })
-
         for (let postDB of postsDB) {
             await this.deletePostById(postDB.id)
         }

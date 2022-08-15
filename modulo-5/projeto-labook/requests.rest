@@ -36,3 +36,25 @@ Content-Type: application/json
 {
     "name": "Astrodev3"
 }
+
+### 5) Create post
+POST http://localhost:3003/posts
+Authorization: 
+Content-Type: application/json
+
+{}
+
+### 6) Edit post
+PUT http://localhost:3003/posts/
+Authorization: 
+Content-Type: application/json
+
+{}
+
+### 7) Delete post
+DELETE http://localhost:3003/posts/
+Authorization: 
+
+### 8) Get post
+GET http://localhost:3003/posts
+Authorization: 
