@@ -4,6 +4,8 @@ import { IdGeneratorMock } from "../mocks/services/IdGeneratorMock"
 import { HashManagerMock } from "../mocks/services/HashManagerMock"
 import { AuthenticatorMock } from "../mocks/services/AuthenticatorMock"
 import { ICreatePostInputDTO } from "../../src/models/Post"
+import { BaseError } from "../../src/errors/BaseError"
+import exp from "constants"
 
 describe("Testando Post Business", () => {
     const postBusiness = new PostBusiness(
@@ -25,4 +27,15 @@ describe("Testando Post Business", () => {
         expect(response.post.getUserId()).toEqual("101")
     })
 
+    test("falha em criar post - texto inválido", async () => {
+        expect.assertions(2)
+        try {
+            await postBusiness.createPost({ token: "token-astrodev", content: "" })
+        } catch (error: unknown) {
+            if (error instanceof BaseError) {
+                expect(error.message).toEqual("Parâmetro 'content' inválido: mínimo de 1 caracteres")
+                expect(error.statusCode).toEqual(400)
+            }
+        }
+    })
 })

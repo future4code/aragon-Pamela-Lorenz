@@ -4,6 +4,7 @@ import { IdGeneratorMock } from "../mocks/services/IdGeneratorMock"
 import { HashManagerMock } from "../mocks/services/HashManagerMock"
 import { AuthenticatorMock } from "../mocks/services/AuthenticatorMock"
 import { IGetPostsInputDTO } from "../../src/models/Post"
+import { BaseError } from "../../src/errors/BaseError"
 
 describe("Testando Post Business", () => {
     const postBusiness = new PostBusiness(
@@ -24,4 +25,15 @@ describe("Testando Post Business", () => {
         expect(response.posts[0].getUserId()).toEqual("101")
     })
 
+    test("Falha em buscar posts", async () => {
+        expect.assertions(2)
+        try {
+            await postBusiness.getPosts({ token: "astrodev" } as IGetPostsInputDTO)
+        } catch (error: unknown) {
+            if (error instanceof BaseError) {
+                expect(error.message).toEqual("Não autenticado")
+                expect(error.statusCode).toEqual(400)
+            }
+        }
+    })
 })
