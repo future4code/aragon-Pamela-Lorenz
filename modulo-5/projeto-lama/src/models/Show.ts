@@ -56,7 +56,12 @@ export interface IGetShowOutputDTO {
 }
 
 export interface IGetShowInputDTO {
-    token: string
+    token: string,
+    search?: string,
+    sort?: string,
+    limit?: number,
+    page?: number,
+    offset?: number
 }
 
 export interface IDeleteInputDTO {
@@ -74,4 +79,8 @@ export interface ICreateShowInputDTO {
 export interface ICreateShowOutputDTO {
     message: string,
     show: Show
-}    
+}
+
+export interface IDeleteOutputDTO {
+    message: string
+}

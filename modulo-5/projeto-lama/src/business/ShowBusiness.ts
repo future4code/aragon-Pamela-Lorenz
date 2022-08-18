@@ -1,5 +1,6 @@
 import { ShowDatabase } from "../database/ShowDatabase"
-import { ICreateShowInputDTO, Show } from "../models/Show"
+import { ICreateShowInputDTO, ICreateShowOutputDTO, IDeleteInputDTO, IDeleteOutputDTO, IGetShowInputDTO, IGetShowOutputDTO, Show } from "../models/Show"
+import { USER_ROLES } from "../models/User"
 import { Authenticator } from "../services/Authenticator"
 import { HashManager } from "../services/HashManager"
 import { IdGenerator } from "../services/IdGenerator"
@@ -13,156 +14,68 @@ export class ShowBusiness {
     ) { }
 
     public createShow = async (input: ICreateShowInputDTO) => {
-        const { token, band, startsAt, tickets } = input
+        const { token, band, startsAt } = input
         const payload = this.authenticator.getTokenPayload(token)
+        
+        if(payload){
+
+        }
 
         const id = this.idGenerator.generate()
         const show = new Show(
             id,
             band,
-            new Date(),
-            tickets
+            new Date(startsAt)
         )
-        await this.showDatabase.createShow(Show)
-        const response: ICreateShowOutputDTO = {
-            message: "Post criado com sucesso",
-            post
-        }
-
+        await this.showDatabase.createShow(show)
+        const response: ICreateShowOutputDTO = { message: "Show criado com sucesso.", show }
         return response
     }
 
-    public getPosts = async (input: IGetPostsInputDTO) => {
+    public getShow = async (input: IGetShowInputDTO) => {
         const { token } = input
-
         const payload = this.authenticator.getTokenPayload(token)
+        const { search, sort, limit, page } = input
+        const offset = limit * (page - 1)
+        const showsDB = await this.showDatabase.getShow(search, sort, limit, offset)
 
-        if (!payload) {
-            throw new Error("Não autenticado")
-        }
-
-        const postsDB = await this.postDatabase.getPosts()
-
-        const posts = postsDB.map(postDB => {
-            return new Post(
-                postDB.id,
-                postDB.content,
-                postDB.user_id
+        const shows = showsDB.map(showDB => {
+            return new Show(
+                showDB.id,
+                showDB.band,
+                showDB.starts_at
             )
         })
 
-        for (let post of posts) {
-            const postId = post.getId()
-            const likes = await this.postDatabase.getLikes(postId)
-            post.setLikes(likes)
+        for (let show of shows) {
+            const showId = show.getId()
         }
-
-        const response: IGetPostsOutputDTO = {
-            posts
+        const response: IGetShowOutputDTO = {
+            shows
         }
-
         return response
     }
 
-    public deletePost = async (input: IDeletePostInputDTO) => {
-        const { token, postId } = input
-
+    public deleteShow = async (input: IDeleteInputDTO) => {
+        const { token, id } = input
         const payload = this.authenticator.getTokenPayload(token)
-
         if (!payload) {
             throw new Error("Não autenticado")
         }
-
-        const postDB = await this.postDatabase.findPostById(postId)
-
-        if (!postDB) {
-            throw new Error("Post não encontrado")
+        const showDB = await this.showDatabase.findShowById(id)
+        if (!showDB) {
+            throw new Error("Show não encontrado")
         }
-
         if (payload.role === USER_ROLES.NORMAL) {
-            if (postDB.user_id !== payload.id) {
+            if (showDB.id !== payload.id) {
                 throw new Error("Sem autorização")
             }
         }
-
-        await this.postDatabase.deletePost(postId)
-
-        const response: IDeletePostOutputDTO = {
-            message: "Post deletado com sucesso"
+        await this.showDatabase.deleteShowById(id)
+        const response: IDeleteOutputDTO = {
+            message: "Show deletado com sucesso"
         }
 
         return response
     }
-
-    public addLike = async (input: IAddLikeInputDTO) => {
-        const { token, postId } = input
-
-        const payload = this.authenticator.getTokenPayload(token)
-
-        if (!payload) {
-            throw new Error("Não autenticado")
-        }
-
-        const postDB = await this.postDatabase.findPostById(postId)
-
-        if (!postDB) {
-            throw new Error("Post não encontrado")
-        }
-
-        const isAlreadyLiked = await this.postDatabase.findLike(
-            postId,
-            payload.id
-        )
-
-        if (isAlreadyLiked) {
-            throw new Error("Já deu like")
-        }
-
-        const likeDB: ILikeDB = {
-            id: this.idGenerator.generate(),
-            post_id: postId,
-            user_id: payload.id
-        }
-
-        await this.postDatabase.addLike(likeDB)
-
-        const response: IAddLikeOutputDTO = {
-            message: "Like realizado com sucesso"
-        }
-
-        return response
-    }
-
-    public removeLike = async (input: IRemoveLikeInputDTO) => {
-        const { token, postId } = input
-
-        const payload = this.authenticator.getTokenPayload(token)
-
-        if (!payload) {
-            throw new Error("Não autenticado")
-        }
-
-        const postDB = await this.postDatabase.findPostById(postId)
-
-        if (!postDB) {
-            throw new Error("Post não encontrado")
-        }
-
-        const isAlreadyLiked = await this.postDatabase.findLike(
-            postId,
-            payload.id
-        )
-
-        if (!isAlreadyLiked) {
-            throw new Error("Ainda não deu like")
-        }
-
-        await this.postDatabase.removeLike(postId, payload.id)
-
-        const response: IRemoveLikeOutputDTO = {
-            message: "Like removido com sucesso"
-        }
-
-        return response
-
-    }
+}

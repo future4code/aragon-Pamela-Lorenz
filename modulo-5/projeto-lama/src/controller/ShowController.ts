@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ShowBusiness } from "../business/ShowBusiness";
 import { BaseError } from "../errors/BaseError";
-import { ICreateShowInputDTO, IDeleteInputDTO, IDeliteInputDTO, IGetShowInputDTO } from "../models/Show";
+import { ICreateShowInputDTO, IDeleteInputDTO, IGetShowInputDTO } from "../models/Show";
 
 export class ShowController {
     constructor(
@@ -28,7 +28,11 @@ export class ShowController {
     public getShow = async (req: Request, res: Response) => {
         try {
             const input: IGetShowInputDTO = {
-                token: req.headers.authorization
+                token: req.headers.authorization,
+                search: req.query.search as string,
+                sort: req.query.sort as string || "asc",
+                limit: Number(req.query.limit) || 10,
+                page: Number(req.query.page) || 1
             }
             const response = await this.showBusiness.getShow(input)
             res.status(200).send(response)
