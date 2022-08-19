@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { appendFile } from 'fs'
 import { UserBusiness } from '../business/UserBusiness'
 import { UserController } from '../controller/UserController'
 import { UserDatabase } from '../database/UserDatabase'
@@ -17,3 +18,5 @@ const userController = new UserController(
     )
 )
 
+userRouter.post("/signup", userController.signup)
+userRouter.post("/login", userController.login)

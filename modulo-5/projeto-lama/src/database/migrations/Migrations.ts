@@ -42,7 +42,7 @@ class Migrations extends BaseDatabase {
         CREATE TABLE IF NOT EXISTS ${ShowDatabase.TABLE_SHOWS}(
             id VARCHAR(255) PRIMARY KEY,
             band VARCHAR(255) NOT NULL,
-            starts_at DATETIME NOT NULL
+            starts_at DATE NOT NULL
         );
 
         CREATE TABLE IF NOT EXISTS ${ShowDatabase.TABLE_TICKETS}(

@@ -51,10 +51,6 @@ export class Show {
     }
 }
 
-export interface IGetShowOutputDTO {
-    shows: Show[]
-}
-
 export interface IGetShowInputDTO {
     token: string,
     search?: string,
@@ -81,6 +77,30 @@ export interface ICreateShowOutputDTO {
     show: Show
 }
 
-export interface IDeleteOutputDTO {
+export interface IDeleteShowOutputDTO {
+    message: string
+}
+
+export interface IGetShowOutputDTO {
+    shows: Show[]
+}
+
+export interface IBuyTicketInputDTO {
+    token: string,
+    showId: string
+}
+
+export interface IBuyTicketOutputDTO {
+    message: string,
+    showDate: Date,
+    band: string
+}
+
+export interface IDeleteTicketInputDTO {
+    token: string,
+    showId: string
+}
+
+export interface IDeleteTicketOutputDTO {
     message: string
 }

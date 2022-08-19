@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { userInfo } from 'os'
 import { ShowBusiness } from '../business/ShowBusiness'
 import { ShowController } from '../controller/ShowController'
 import { ShowDatabase } from '../database/ShowDatabase'
@@ -17,3 +18,8 @@ const showController = new ShowController(
     )
 )
 
+showRouter.get("/", showController.getShow)
+showRouter.post("/", showController.createShow)
+showRouter.post("/:id/ticket", showController.buyTicket)
+showRouter.delete("/:id/ticket", showController.deleteTicket)
+showRouter.delete("/:id", showController.deleteShow)
