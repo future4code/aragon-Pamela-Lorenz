@@ -41,6 +41,18 @@ export class PostDatabase extends BaseDatabase {
         return postDB[0]
     }
 
+    public updatePost = async (post: Post) => {
+        const postDB: IPostDB = {
+            id: post.getId(),
+            content: post.getContent(),
+            user_id: post.getUserId()
+        }
+        await BaseDatabase
+            .connection(PostDatabase.TABLE_POSTS)
+            .update(postDB)
+            .where({ id: postDB.id })
+    }
+
     public deletePostById = async (id: string) => {
         await BaseDatabase
             .connection(PostDatabase.TABLE_POSTS)

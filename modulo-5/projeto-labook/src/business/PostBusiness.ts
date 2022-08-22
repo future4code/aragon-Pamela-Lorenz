@@ -1,5 +1,7 @@
+import { PostDatabase } from "../database/PostDatabase"
 import { UserDatabase } from "../database/UserDatabase"
-import { IGetPostsInputDTO } from "../models/Post"
+import { ICreatePostInputDTO, IDeletePostInputDTO, IEditPostInputDTO, IGetPostOutputDTO, IGetPostsInputDTO, Post } from "../models/Post"
+import { USER_ROLES } from "../models/User"
 import { Authenticator } from "../services/Authenticator"
 import { HashManager } from "../services/HashManager"
 import { IdGenerator } from "../services/IdGenerator"
@@ -9,7 +11,8 @@ export class PostBusiness {
         private userDatabase: UserDatabase,
         private idGenerator: IdGenerator,
         private hashManager: HashManager,
-        private authenticator: Authenticator
+        private authenticator: Authenticator,
+        private postDatabase: PostDatabase
     ) { }
 
     public getPosts = async (input: IGetPostsInputDTO) => {
@@ -34,13 +37,10 @@ export class PostBusiness {
             offset
         )
         const posts = postsDB.map((postDB) => {
-            return new Posts(
+            return new Post(
                 postDB.id,
-                postDB.title,
-                postDB.description,
-                postDB.created_at,
-                postDB.updated_at,
-                postDB.creator_id
+                postDB.content,
+                postDB.user_id
             )
         })
         const response = {
@@ -50,42 +50,28 @@ export class PostBusiness {
     }
 
     public createPost = async (input: ICreatePostInputDTO) => {
-        const title = input.title
-        const description = input.description
+        const content = input.content
         const token = input.token
-        const authenticator = new Authenticator()
-        const payload = authenticator.getTokenPayload(token)
+        const payload = this.authenticator.getTokenPayload(token)
         if (!payload) {
             throw new Error("Token faltando ou inválido")
         }
-        if (!title) {
-            throw new Error("Parâmetro 'title' faltando")
+        if (!content) {
+            throw new Error("Parâmetro content faltando")
         }
-        if (typeof title !== "string") {
-            throw new Error("Parâmetro 'title' deve ser uma string")
+        if (typeof content !== "string") {
+            throw new Error("Parâmetro content deve ser uma string")
         }
-        if (title.length < 3) {
-            throw new Error("Parâmetro 'title' deve possuir pelo menos 3 caracteres")
-        }
-        if (!description) {
-            throw new Error("Parâmetro 'description' faltando")
-        }
-        if (typeof description !== "string") {
-            throw new Error("Parâmetro 'description' deve ser uma string")
-        }
-        if (description.length < 10) {
-            throw new Error("Parâmetro 'description' deve possuir pelo menos 10 caracteres")
+        if (content.length < 3) {
+            throw new Error("Parâmetro content deve possuir pelo menos 3 caracteres")
         }
         const idGenerator = new IdGenerator()
         const post = new Post(
             idGenerator.generate(),
-            title,
-            description,
-            new Date(),
-            new Date(),
+            content,
             payload.id
         )
-        await this.PostDatabase.createPost(post)
+        await this.postDatabase.createPost(post)
         const response = {
             message: "Post criado com sucesso",
             post
@@ -94,50 +80,34 @@ export class PostBusiness {
     }
 
     public editPost = async (input: IEditPostInputDTO) => {
-        const postId = input.id
-        const title = input.title
-        const description = input.description
         const token = input.token
-        const authenticator = new Authenticator()
-        const payload = authenticator.getTokenPayload(token)
+        const content = input.content
+        const payload = this.authenticator.getTokenPayload(token)
         if (!payload) {
             throw new Error("Token faltando ou inválido")
         }
-        if (!title && !description) {
-            throw new Error("Parâmetro faltando")
+        if (content && typeof content !== "string") {
+            throw new Error("Parâmetro content deve ser uma string")
         }
-        if (title && typeof title !== "string") {
-            throw new Error("Parâmetro 'title' deve ser uma string")
+        if (content && content.length < 3) {
+            throw new Error("Parâmetro content deve possuir pelo menos 3 caracteres")
         }
-        if (title && title.length < 3) {
-            throw new Error("Parâmetro 'title' deve possuir pelo menos 3 caracteres")
-        }
-        if (description && typeof description !== "string") {
-            throw new Error("Parâmetro 'description' deve ser uma string")
-        }
-        if (description && description.length < 10) {
-            throw new Error("Parâmetro 'description' deve possuir pelo menos 10 caracteres")
-        }
-        const postDB = await thisPostDatabase.findPostById(postId)
+        const postDB = await this.postDatabase.findPostById(token)
         if (!postDB) {
             throw new Error("O post a ser editado, não existe")
         }
         const post = new Post(
             postDB.id,
-            postDB.title,
-            postDB.description,
-            postDB.created_at,
-            postDB.updated_at,
-            postDB.creator_id
+            postDB.content,
+            postDB.user_id
         )
         if (payload.role === USER_ROLES.NORMAL) {
-            if (payload.id !== post.getCreatorId()) {
+            if (payload.id !== post.getUserId()) {
                 throw new Error("Esse post não pode ser editado por esse usuário")
             }
         }
-        title && post.setTitle(title)
-        description && post.setDescription(description)
-        await postDatabase.updatePost(post)
+        content && post.setContent(content)
+        await this.postDatabase.updatePost(post)
         const response = {
             message: "Post editado com sucesso",
             post
@@ -147,27 +117,21 @@ export class PostBusiness {
 
     public deletePost = async (input: IDeletePostInputDTO) => {
         const token = input.token
-        const postId = input.postId
-        const authenticator = new Authenticator()
-        const payload = authenticator.getTokenPayload(token)
+        const idToDelete = input.idToDelete
+        const payload = this.authenticator.getTokenPayload(token)
         if (!payload) {
             throw new Error("Token faltando ou inválido")
         }
-
-        const postDB = await this.postDatabase.findPostById(postId)
+        const postDB = await this.postDatabase.findPostById(idToDelete)
         if (!postDB) {
             throw new Error("O post a ser deletado não existe")
         }
         const post = new Post(
             postDB.id,
-            postDB.title,
-            postDB.description,
-            postDB.created_at,
-            postDB.updated_at,
-            postDB.creator_id
-        )
+            postDB.content,
+            postDB.user_id)
         if (payload.role === USER_ROLES.NORMAL) {
-            if (payload.id !== post.getCreatorId()) {
+            if (payload.id !== post.getUserId()) {
                 throw new Error("Esse post não pode ser deletado por esse usuário")
             }
         }
