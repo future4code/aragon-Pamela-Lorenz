@@ -22,7 +22,7 @@ Content-Type: application/json
 
 ### 3) Create show
 POST http://localhost:3003/shows
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MDk0MzI0MywiZXhwIjoxNjYxMDI5NjQzfQ.0x3FONwfvoy9Kwo7PhAKtF-A53mfP_MyXG8w8pksCbM
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MTE4OTIzMiwiZXhwIjoxNjYxMjc1NjMyfQ.so8nn8mnlXw0VP_fc4JqnaLQrplcbEW9dCBpNFyJRrA
 Content-Type: application/json
 
 {
@@ -42,5 +42,5 @@ DELETE http://localhost:3003/shows/201/ticket
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MDk0MzI0MywiZXhwIjoxNjYxMDI5NjQzfQ.0x3FONwfvoy9Kwo7PhAKtF-A53mfP_MyXG8w8pksCbM
 
 ### delete show
-DELETE  http://localhost:3003/shows/:94dd447a-3872-4d90-9470-1a32da9bfd4f
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MDk0MzI0MywiZXhwIjoxNjYxMDI5NjQzfQ.0x3FONwfvoy9Kwo7PhAKtF-A53mfP_MyXG8w8pksCbM
+DELETE  http://localhost:3003/shows/e6320890-f11a-40bb-aa77-6b40bdfd14b5
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MTE4OTIzMiwiZXhwIjoxNjYxMjc1NjMyfQ.so8nn8mnlXw0VP_fc4JqnaLQrplcbEW9dCBpNFyJRrA
