@@ -3,7 +3,7 @@ import { ConflictError } from "../errors/ConflictError"
 import { ForbiddenError } from "../errors/ForbiddenError"
 import { RequestError } from "../errors/RequestError"
 import { UnauthorizedError } from "../errors/UnauthorizedError"
-import { ICreatePizzaInputDTO, ICreatePizzaOutputDTO, IDeletePizzaInputDTO, IDeletePizzaOutputDTO, IGetPizzaOutputDTO, IPizzaDB, Pizza } from "../models/Pizza"
+import { ICreatePizzaInputDTO, ICreatePizzaOutputDTO, IDeletePizzaInputDTO, IDeletePizzaOutputDTO, IGetOrderByIdInputDTO, IGetOrderByIdOutputDTO, IGetOrderInputDTO, IGetOrderOutputDTO, IGetPizzaOutputDTO, IOrderDB, IPizzaDB, Order, Pizza } from "../models/Pizza"
 import { USER_ROLES } from "../models/User"
 import { Authenticator } from "../services/Authenticator"
 import { HashManager } from "../services/HashManager"
@@ -26,30 +26,23 @@ export class PizzaBusiness {
         if (payload.role !== USER_ROLES.ADMIN) {
             throw new ForbiddenError("Somente admins podem criar pizzas.")
         }
-
         if (typeof name !== "string") {
             throw new RequestError("Parâmetro name inválido: deve ser uma string")
         }
-
         if (name.length < 3) {
             throw new RequestError("Parâmetro name inválido: mínimo de 3 caracter")
         }
-
         const createdAt = new Date(Date.now())
-
         const pizzaAlreadyExists = await this.pizzaDatabase.findPizzaByName(name)
-
         if (pizzaAlreadyExists) {
             throw new ConflictError("Essa pizza já existe.")
         }
-
         const pizza = new Pizza(
             this.idGenerator.generate(),
             name,
             price,
             ingredients
         )
-
         await this.pizzaDatabase.createPizza(pizza)
         const response: ICreatePizzaOutputDTO = { message: "Pizza criada com sucesso.", pizza }
         return response
@@ -65,7 +58,6 @@ export class PizzaBusiness {
                 pizzaDB.ingredients
             )
         })
-
         for (let pizza of pizzas) {
             const orders = await this.pizzaDatabase.getOrderById(pizza.getId())
             orders.valueOf
@@ -95,6 +87,52 @@ export class PizzaBusiness {
         const response: IDeletePizzaOutputDTO = {
             message: "Pizza excluida com sucesso"
         }
+        return response
+    }
+
+    public getOrders = async (input: IGetOrderInputDTO): Promise<IGetOrderOutputDTO> => {
+        const orderDB: IOrderDB[] = await this.pizzaDatabase.getOrder()
+
+        if (!input.token) {
+            throw new UnauthorizedError("Token inválido ou faltando")
+        }
+        const payload = this.authenticator.getTokenPayload(input.token)
+        if (payload.role !== USER_ROLES.ADMIN) {
+            throw new ForbiddenError("Somente admins podem buscar pedidos.")
+        }
+
+        const orders = orderDB.map(orderDB => {
+            return new Order(
+                orderDB.id,
+                orderDB.created_at,
+                orderDB.pizza_id,
+                orderDB.user_id,
+                orderDB.total_price,
+                orderDB.delivered_at
+            )
+        })
+        const response: IGetOrderOutputDTO = { orders }
+        return response
+    }
+
+    public getOrderById = async (input: IGetOrderByIdInputDTO): Promise<IGetOrderByIdOutputDTO> => {
+        const orderDB: IOrderDB = await this.pizzaDatabase.getOrderById(input.orderId)
+        const order = new Order(
+            orderDB.id,
+            orderDB.created_at,
+            orderDB.pizza_id,
+            orderDB.user_id,
+            orderDB.total_price,
+            orderDB.delivered_at
+        )
+        if (!input.token) {
+            throw new UnauthorizedError("Token inválido ou faltando")
+        }
+        const payload = this.authenticator.getTokenPayload(input.token)
+        if (payload.role !== USER_ROLES.ADMIN) {
+            throw new ForbiddenError("Somente admins podem buscar pedidos por id.")
+        }
+        const response: IGetOrderByIdOutputDTO = { order }
         return response
     }
 }

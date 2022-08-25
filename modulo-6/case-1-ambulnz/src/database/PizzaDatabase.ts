@@ -15,6 +15,12 @@ export class PizzaDatabase extends BaseDatabase {
         return pizzaDB
     }
 
+    public getOrder = async (): Promise<IOrderDB[]> => {
+        const result: IOrderDB[] = await BaseDatabase
+            .connection(PizzaDatabase.TABLE_ORDERS)
+            .select()
+        return result
+    }
 
     public getPizza = async (): Promise<IPizzaDB[]> => {
         const result: IPizzaDB[] = await BaseDatabase
@@ -23,12 +29,12 @@ export class PizzaDatabase extends BaseDatabase {
         return result
     }
 
-    public getOrderById = async (pizzaId: string): Promise<number> => {
-        const result: IPizzaDB[] = await BaseDatabase
+    public getOrderById = async (orderId: string): Promise<IOrderDB> => {
+        const result: IOrderDB[] = await BaseDatabase
             .connection(PizzaDatabase.TABLE_ORDERS)
             .select()
-            .where({ pizza_id: pizzaId })
-        return result.length
+            .where({ id: orderId })
+        return result[0]
     }
 
     public createPizza = async (pizza: Pizza): Promise<void> => {
@@ -52,7 +58,7 @@ export class PizzaDatabase extends BaseDatabase {
     }
 
     public updatePizza = async (pizza: Pizza): Promise<void> => {
-        const pizzaDB: IPizzaDB = {
+            const pizzaDB: IPizzaDB = {
             id: pizza.getId(),
             name: pizza.getName(),
             price: pizza.getPrice(),

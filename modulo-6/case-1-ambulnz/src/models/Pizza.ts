@@ -157,6 +157,28 @@ export interface ICreateOrderOutputDTO {
     message: string
 }
 
+export interface IGetOrderOutputDTO {
+    orders: Order[]
+}
+
+export interface IGetOrderByIdOutputDTO {
+    order: Order
+}
+
+export interface IGetOrderByIdInputDTO {
+    token: string,
+    orderId: string
+}
+
+export interface IGetOrderInputDTO {
+    token: string,
+    search?: string,
+    sort?: string,
+    limit?: number,
+    page?: number,
+    offset?: number
+}
+
 export interface IConfirmDeliveryInputDTO {
     token: string,
     orderId: string
