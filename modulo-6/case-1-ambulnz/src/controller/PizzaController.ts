@@ -22,7 +22,7 @@ export class PizzaController {
             if (error instanceof BaseError) {
                 return res.status(error.statusCode).send({ message: error.message })
             }
-            res.status(500).send({ message: "Erro inesperado ao criar show" })
+            res.status(500).send({ message: "Erro inesperado ao criar pizza" })
         }
     }
 
@@ -35,7 +35,7 @@ export class PizzaController {
                 return res.status(error.statusCode).send({ message: error.message })
             }
             console.log(error)
-            res.status(500).send({ message: "Erro inesperado ao buscar shows" })
+            res.status(500).send({ message: "Erro inesperado ao buscar pizzas" })
         }
     }
 
@@ -66,7 +66,7 @@ export class PizzaController {
             if (error instanceof BaseError) {
                 return res.status(error.statusCode).send({ message: error.message })
             }
-            res.status(500).send({ message: "Erro inesperado ao buscar shows" })
+            res.status(500).send({ message: "Erro inesperado ao buscar pedidos" })
         }
     }
 

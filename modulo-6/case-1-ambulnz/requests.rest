@@ -21,15 +21,28 @@ Content-Type: application/json
 }
 
 ### 3) Create pizza
-POST http://localhost:3003/pizza
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MTM2NjQ5NiwiZXhwIjoxNjYxNDUyODk2fQ.AGS4QF7RrKZO4NDlIi72PX25tUkiep-U_HRztnzluik
-
+POST http://localhost:3003/pizzas
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MTQ1MjAyOSwiZXhwIjoxNjYxNTM4NDI5fQ.oZR8dv6yqOjAdOcv2naTlGo0D2wLZur18nbyl1mAwIk
 Content-Type: application/json
 
-### 5) Delete pizza
-DELETE http://localhost:3003/pizzas/301
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MTM2NjQ5NiwiZXhwIjoxNjYxNDUyODk2fQ.AGS4QF7RrKZO4NDlIi72PX25tUkiep-U_HRztnzluik
+{
+"name": "chocobol",
+"price": 850,
+"ingredients": "Chocolate preto ou branco, confete de flocos de arroz."
+}
 
-### 6) Get pizzas
+### 4) Delete pizza
+DELETE http://localhost:3003/pizzas/5b5a1ec1-c5fb-4b6b-9e8c-44c200fb2f7e
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MTQ1MjAyOSwiZXhwIjoxNjYxNTM4NDI5fQ.oZR8dv6yqOjAdOcv2naTlGo0D2wLZur18nbyl1mAwIk
+
+### 5) busca pizzas
 GET http://localhost:3003/pizzas
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkxMGI4MTI2LTQyZTAtNGU3MS1hN2I5LWM0NDYzMWMwNmQwNyIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE2NjEzNjU0NzIsImV4cCI6MTY2MTQ1MTg3Mn0.97CJxjiaXDz8EIvpS9D1p1LR-fxw14Yxr9PRNSkterY
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MTQ1MjAyOSwiZXhwIjoxNjYxNTM4NDI5fQ.oZR8dv6yqOjAdOcv2naTlGo0D2wLZur18nbyl1mAwIk
+
+### 6) busca pedidos por id
+GET http://localhost:3003/pizzas/orders/301
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MTQ1MjAyOSwiZXhwIjoxNjYxNTM4NDI5fQ.oZR8dv6yqOjAdOcv2naTlGo0D2wLZur18nbyl1mAwIk
+
+### 7) buscar pedidos
+GET http://localhost:3003/pizzas/orders
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MTQ1MjAyOSwiZXhwIjoxNjYxNTM4NDI5fQ.oZR8dv6yqOjAdOcv2naTlGo0D2wLZur18nbyl1mAwIk

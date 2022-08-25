@@ -58,10 +58,6 @@ export class PizzaBusiness {
                 pizzaDB.ingredients
             )
         })
-        for (let pizza of pizzas) {
-            const orders = await this.pizzaDatabase.getOrderById(pizza.getId())
-            orders.valueOf
-        }
         const response: IGetPizzaOutputDTO = {
             pizzas
         }
