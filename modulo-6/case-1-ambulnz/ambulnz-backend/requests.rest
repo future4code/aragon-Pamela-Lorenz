@@ -1,0 +1,48 @@
+### Endpoint de test
+GET http://localhost:3003/ping
+
+### Signup
+POST http://localhost:3003/users/signup
+Content-Type: application/json
+
+{
+    "name": "astrodev",
+    "email": "astrodev@gmail.com",
+    "password": "bananinha"
+}
+
+### 2) Login
+POST http://localhost:3003/users/login
+Content-Type: application/json
+
+{
+    "email": "astrodev@gmail.com",
+    "password": "bananinha"
+}
+
+### 3) Create pizza
+POST http://localhost:3003/pizzas
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MTQ1MjAyOSwiZXhwIjoxNjYxNTM4NDI5fQ.oZR8dv6yqOjAdOcv2naTlGo0D2wLZur18nbyl1mAwIk
+Content-Type: application/json
+
+{
+"name": "chocobol",
+"price": 850,
+"ingredients": "Chocolate preto ou branco, confete de flocos de arroz."
+}
+
+### 4) Delete pizza
+DELETE http://localhost:3003/pizzas/5b5a1ec1-c5fb-4b6b-9e8c-44c200fb2f7e
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MTQ1MjAyOSwiZXhwIjoxNjYxNTM4NDI5fQ.oZR8dv6yqOjAdOcv2naTlGo0D2wLZur18nbyl1mAwIk
+
+### 5) busca pizzas
+GET http://localhost:3003/pizzas
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MTQ1MjAyOSwiZXhwIjoxNjYxNTM4NDI5fQ.oZR8dv6yqOjAdOcv2naTlGo0D2wLZur18nbyl1mAwIk
+
+### 6) busca pedidos por id
+GET http://localhost:3003/pizzas/orders/301
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MTQ1MjAyOSwiZXhwIjoxNjYxNTM4NDI5fQ.oZR8dv6yqOjAdOcv2naTlGo0D2wLZur18nbyl1mAwIk
+
+### 7) buscar pedidos
+GET http://localhost:3003/pizzas/orders
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MTQ1MjAyOSwiZXhwIjoxNjYxNTM4NDI5fQ.oZR8dv6yqOjAdOcv2naTlGo0D2wLZur18nbyl1mAwIk
