@@ -65,6 +65,7 @@ export class PostDatabase extends BaseDatabase {
             .connection(PostDatabase.TABLE_POSTS)
             .select()
             .where({ creator_id: userId })
+
         for (let postDB of postsDB) {
             await this.deletePostById(postDB.id)
         }

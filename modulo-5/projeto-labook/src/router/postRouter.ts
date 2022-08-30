@@ -1,10 +1,4 @@
-import { Router } from "express"
-import { PostBusiness } from "../business/PostBusiness"
-import { PostController } from "../controller/PostController"
-import { PostDatabase } from "../database/PostDatabase"
-import { Authenticator } from "../services/Authenticator"
-import { HashManager } from "../services/HashManager"
-import { IdGenerator } from "../services/IdGenerator"
+import { Router } from 'express'
 
 export const postRouter = Router()
 
