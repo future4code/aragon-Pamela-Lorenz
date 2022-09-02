@@ -1,9 +1,8 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-function SignupPage() {
+export default function SignupPage() {
   const navigate = useNavigate();
-
 
   const { signUp, checker } = context.states;
 
@@ -26,102 +25,64 @@ function SignupPage() {
 
   return (
     <main>
-      <p>
+      <h1>
         <b>Cadastrar</b>
-      </p>
+      </h1>
 
-      <form onSubmit={signiup}>
-        <TextField
-          margin="normal"
-          required
-          id="name"
-          label="nome"
-          name="name"
-          autoComplete="name"
-          placeholder="Nome e sobrenome"
-          fullWidth
-          value={signUp.name}
-          onChange={onChangeSignUp}
-          autoFocus
-        />
+      <form onSubmit={signUp}>
+        required
+        id="name"
+        label="nome"
+        name="name"
+        autoComplete="name"
+        placeholder="Nome e sobrenome"
+        value={signUp.name}
+        onChange={onChangeSignUp}
 
-        <TextField
-          margin="normal"
-          required
-          id="email"
-          label="email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          placeholder="email@email.com"
-          fullWidth
-          value={checker.email}
-          onChange={onChangeChecker}
-          autoFocus
-        />
+        required
+        id="email"
+        label="email"
+        name="email"
+        type="email"
+        autoComplete="email"
+        placeholder="email@email.com"
+        value={checker.email}
+        onChange={onChangeChecker}
 
-        <TextField
-          margin="normal"
-          required
-          id="email"
-          label="email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          placeholder="Confirme o email anterior"
-          fullWidth
-          value={signUp.email}
-          onChange={onChangeSignUp}
-          autoFocus
-        />
+        required
+        id="email"
+        label="email"
+        name="email"
+        type="email"
+        autoComplete="email"
+        placeholder="Confirme o email anterior"
+        value={signUp.email}
+        onChange={onChangeSignUp}
         {checker.email !== signUp.email && (
           <p>
             <b>Repita o mesmo email</b>
           </p>
         )}
+
         <br />
 
-        <TextField
-          margin="normal"
-          required
-          id="CPF"
-          label="CPF"
-          name="cpf"
-          type="number"
-          placeholder="Somente números"
-          fullWidth
-          value={signUp.cpf}
-          onChange={onChangeSignUp}
-          autoFocus
-        />
+        required
+        id="password"
+        label="password"
+        name="password"
+        type="password"
+        placeholder="Mínimo seis caracteres"
+        value={checker.password}
+        onChange={onChangeChecker}
 
-        <TextField
-          margin="normal"
-          required
-          id="password"
-          label="password"
-          name="password"
-          type="password"
-          placeholder="Mínimo seis caracteres"
-          fullWidth
-          value={checker.password}
-          onChange={onChangeChecker}
-          autoFocus
-        />
-
-        <TextField
-          margin="normal"
-          required
-          id="password"
-          label="password"
-          name="password"
-          type="password"
-          placeholder="Confirme a senha anterior"
-          fullWidth
-          value={signUp.password}
-          onChange={onChangeSignUp}
-          autoFocus
-        />
+        required
+        id="password"
+        label="password"
+        name="password"
+        type="password"
+        placeholder="Confirme a senha anterior"
+        value={signUp.password}
+        onChange={onChangeSignUp}
         {checker.password !== signUp.password && (
           <p>repita a mesma senha</p>
         )}
@@ -129,9 +90,7 @@ function SignupPage() {
         <br />
         {checker.password === signUp.password &&
           checker.email === signUp.email ? (
-          <Button
-            type="submit"
-          >Cadastrar</Button>
+          <Button type="submit">Cadastrar</Button>
         ) : (
           <Button disabled type="submit">Cadastrar</Button>
         )}

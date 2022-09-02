@@ -1,35 +1,42 @@
-import Router from "./routes/Router";
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import GlobalState from "./global/GlobalState";
+import axios from "axios"
+import { useEffect, useState } from "react";
 
-const theme = createTheme({
-  status: {
-    danger: '#e53e3e',
-  },
-  palette: {
-    primary: {
-      main: '#5cb888',
-      darker: '#000000',
-    },
-    secondary: {
-      main: "#000000",
-      contrastText: "#fff"
-    },
-    neutral: {
-      main: '#64748B',
-      contrastText: '#fff',
-    },
-  },
-});
+export default function App() {
+  const [pizzas, setPizzas] = useState([])
+  const [orders, setOrders] = useState([])
+  useEffect(() => {
 
-function App () {
+    if (!token) {
+      goToLoginPage(navigate);
+    }
+
+    axios.get(`${BASE_URL}pizzas`).then((res) => {
+      setPizzas(res.data.pizzas)
+    })
+
+    axios.get(`${BASE_URL}orders`).then((res) => {
+      setOrders(res.data.orders)
+    })
+  }, [])
+
   return (
-    <ThemeProvider theme={theme}>
-    <GlobalState>
-      <Router />
-    </GlobalState>
-    </ThemeProvider>
+
+    <main>
+      <header>
+        <p> Ambulnz</p>
+      </header>
+
+      <section>
+        <ul>
+          {pizzas.map((pizza) => (
+            <li>
+              <p> {pizza.name}</p>
+              <p>{pizza.price} </p>
+              <p> {pizza.ingredients}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </main>
   )
 }
-
-export default App;
