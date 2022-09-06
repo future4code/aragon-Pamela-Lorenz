@@ -1,11 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HomePage from "../pages/homePage/HomePage";
-import SignupPage from "../pages/SignupPage/SignupPage";
-import CartPage from "../pages/cartPage/CartPage";
-import ErrorPage from "../pages/errorPage/ErrorPage";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import HomePage from "../pages/HomePage/HomePage";
 import LoginPage from "../pages/LoginPage/LoginPage";
+import MenuPage from "../pages/MenuPage/MenuPage";
+import OrdersPage from "../pages/OrdersPage/OrdersPage";
+import SignupPage from "../pages/SignupPage/SignupPage";
 
-function Router() {
+
+export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
@@ -19,5 +21,3 @@ function Router() {
     </BrowserRouter>
   );
 }
-
-export default Router;

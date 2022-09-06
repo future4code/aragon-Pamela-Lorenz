@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { goToLoginPage } from "../../routes/cordinator";
 
-function HomePage() {
+export default function HomePage() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   useEffect(() => {
@@ -18,4 +18,3 @@ function HomePage() {
   )
 }
 
-export default HomePage;

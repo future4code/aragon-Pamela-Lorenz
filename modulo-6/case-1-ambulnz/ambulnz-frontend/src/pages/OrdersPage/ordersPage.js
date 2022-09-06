@@ -15,7 +15,7 @@ export default function OrdersPage() {
             </header>
             <main>
                 <h1>
-                    "Pagina de Pedidos "
+                    "Página de Pedidos "
                 </h1>
                 <ul>
                     {orders.map((order) => (
